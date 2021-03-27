@@ -41,7 +41,7 @@ function Sidebar() {
     return (
         <Container>
            <Header>
-               <UserAvatar onClick={() =>auth.signOut()}/>
+               <UserAvatar src={user.photoURL} onClick={() =>auth.signOut()}/>
                <IconsContainer>
                    <IconButton>
                         <ChatIcon/>
@@ -91,6 +91,20 @@ const SearchInput  = styled.input `
 `;
 
 const Container  = styled.div `
+    .MuiSvgIcon-root{
+        color: #FBBD38 !important;
+    };
+    flex:0.45;
+    border-right : 1px solid whitesmoke;
+    height:100vh;
+    max-width:350px;
+    min-width:300px;
+    overflow-y:auto;
+    ::-webki-scrollbar{
+        display:none;
+    }
+    -ms-overflow-style:none;
+    scrollbar-width:none;
 
 `;
 const Header  = styled.div `

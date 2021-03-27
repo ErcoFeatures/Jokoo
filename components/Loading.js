@@ -4,7 +4,7 @@ function Loading() {
         <center style={{display:"grid", placeItems:"center", height:"100vh"}}>
             <div>
                 <img
-                    src="https://www.logo.wine/a/logo/WhatsApp/WhatsApp-Logo.wine.svg"
+                    src="/logo/app_02/512.png"
                     alt=""
                     style={{marginBottom:10}}
                     height={200}

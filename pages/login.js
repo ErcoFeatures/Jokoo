@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import Head from 'next/head'
 import { Button } from '@material-ui/core';
-import {auth, provider } from '../firebase'
+import {auth, provider } from '../firebase';
 function Login() {
     const signIn = () =>{
         auth.signInWithPopup(provider).catch(alert)
@@ -14,7 +14,7 @@ function Login() {
             </Head>
 
             <LoginContainer>
-                <Logo src="https://www.logo.wine/a/logo/WhatsApp/WhatsApp-Logo.wine.svg"/>
+                <Logo src="/logo/app_02/512.png"/>
                 <Button  onClick={signIn} variant="outlined"> 
                     Sign in with Google
                 </Button>
