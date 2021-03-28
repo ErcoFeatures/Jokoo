@@ -20,7 +20,6 @@ function ChatScreen({chat, messages}) {
     const [input,  setInput] = useState ("")
     const router = useRouter(); 
     const endOfMessagesRef = useRef(null);
-debugger;
     const [messagesSnapshot] = useCollection(
         db
         .collection("chats")
@@ -168,7 +167,7 @@ const EndOfMessage = styled.div`
 `;
 const MessageContainer = styled.div`
     padding:30px;
-    background-color: #e5ded8;
+    background-color: #262D31;
     min-height: 90vh;
 
 
