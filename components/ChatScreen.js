@@ -163,10 +163,11 @@ const Input = styled.input`
 
 `;
 const EndOfMessage = styled.div`
+    margin-bottom:50px;
 
 `;
 const MessageContainer = styled.div`
-    padding:30px 30px 70px 30px;
+    padding:30px;
     background-color: #e5ded8;
     min-height: 90vh;
 
