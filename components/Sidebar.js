@@ -30,7 +30,6 @@ function Sidebar() {
     }
 
     const chatAlreadyExist = (recipientEmail) => {
-        debugger;
         return !!chatsSnapshot?.docs.find(
             chat => chat.data().users.find(user => user === recipientEmail)?.length > 0
         );
@@ -98,7 +97,7 @@ const Container  = styled.div `
     border-right : 1px solid whitesmoke;
     height:100vh;
     max-width:350px;
-    min-width:300px;
+    min-width:250px;
     overflow-y:auto;
     ::-webki-scrollbar{
         display:none;
