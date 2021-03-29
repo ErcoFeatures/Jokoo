@@ -86,6 +86,9 @@ const PhoneImageContainer = styled.div `
     height: 100px;
     width: 100px;
     padding: 74px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 const WelcomMessageContainer  = styled.div`
 display : flex;
@@ -99,9 +102,7 @@ border-bottom: 1px solid whitesmoke;
 
 const Logo  = styled.img`
     height: 35px;
-    width: 35px;
-    margin-bottom:50px;
-    
+    width: 35px;   
 `
 
 const Container = styled.div`
