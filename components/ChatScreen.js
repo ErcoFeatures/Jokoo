@@ -82,6 +82,7 @@ function ChatScreen({chat, messages}) {
     const recipient  = recipientSnapshot?.docs?.[0]?.data();
 
     const recipientEmail = getRecipientEmail(chat.users, user);
+    
     return (
         <Container>
             <Header>
@@ -92,23 +93,25 @@ function ChatScreen({chat, messages}) {
                         src={recipientEmail[0]}
                     />
                 }
-                
                 <HeaderInformation>
                     <h3>{recipientEmail}</h3>
                     {recipientSnapshot? (
+                        (((new Date()).getTime() - recipient?.lastSeen?.toDate().getTime() ) /1000) < 60 ? 
+                        <p>Online</p>: (
                         <p>Last active : {' '}
                         {recipient?.lastSeen?.toDate()? (
                             <TimeAgo
                                 datetime={recipient?.lastSeen?.toDate()}
                             />
                             ):(
-                                "unavailable"
+                                "unavailable "
                             )
                         }
                         </p> 
-                        ):(
-                            <p>Loading Last active...</p>
                         )
+                    ):(
+                        <p>Loading Last active...</p>
+                    )
                     }
                 </HeaderInformation>
                 <HeaderIcons>
@@ -177,12 +180,14 @@ const HeaderInformation = styled.div`
     margin-left:15px;
     flex:1;
     > h3{
-        margin-bottom:3px;
+        margin-bottom:0;
     }
 
     > P{
         font-size:14px;
         color:gray;
+        margin-top:0;
+        margin-bottom:23px;
 
     }
 `;

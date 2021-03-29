@@ -30,7 +30,6 @@ function Sidebar() {
     }
 
     const chatAlreadyExist = (recipientEmail) => {
-        debugger;
         return !!chatsSnapshot?.docs.find(
             chat => chat.data().users.find(user => user === recipientEmail)?.length > 0
         );
