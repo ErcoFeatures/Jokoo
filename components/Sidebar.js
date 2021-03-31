@@ -9,7 +9,7 @@ import {auth, db} from '../firebase';
 import {useAuthState} from 'react-firebase-hooks/auth'
 import {useCollection} from 'react-firebase-hooks/firestore'
 import Chat from './Chat';
-function Sidebar() {
+function Sidebar({forwardedRef}) {
     const [user]  = useAuthState (auth);
     const userChatRef = db.collection("chats")
         .where('users', 'array-contains', user.email);
@@ -38,7 +38,7 @@ function Sidebar() {
 
 
     return (
-        <Container>
+        <Container  currentScreenWidth={window.screen.width} ref={forwardedRef}>
            <Header>
                <UserAvatar src={user.photoURL} onClick={() =>auth.signOut()}/>
                <IconsContainer>
@@ -67,7 +67,36 @@ function Sidebar() {
     )
 }
 
-export default Sidebar
+export default Sidebar;
+
+
+
+
+const Container  = styled.div `
+
+    left: ${props => props.currentScreenWidth < 767 ? "-350px":0};
+    .MuiSvgIcon-root{
+        color: #FBBD38 !important;
+    };
+    background-color:white;
+    position:fixed;
+    border-right : 1px solid whitesmoke;
+    width:350px;
+    overflow-y:auto;
+    ::-webki-scrollbar{
+        display:none;
+    }
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+
+    &.active{
+        width:${props => props.currentScreenWidth < 767 ? "100%" :0};
+        left: ${props => props.currentScreenWidth < 767 ? 0 :auto};
+    }
+    transition: all 0.5s;
+
+`;
+
 
 const SideBarButton  = styled(Button) `
     width:100%;
@@ -87,24 +116,6 @@ const SearchInput  = styled.input `
     outline-width: 0;
     border:none;
     flex:1;
-`;
-
-const Container  = styled.div `
-    .MuiSvgIcon-root{
-        color: #FBBD38 !important;
-    };
-    flex:0.45;
-    border-right : 1px solid whitesmoke;
-    height:100vh;
-    max-width:350px;
-    min-width:250px;
-    overflow-y:auto;
-    ::-webki-scrollbar{
-        display:none;
-    }
-    -ms-overflow-style:none;
-    scrollbar-width:none;
-
 `;
 const Header  = styled.div `
     display:flex;
