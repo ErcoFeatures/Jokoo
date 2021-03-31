@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState, useEffect} from 'react'
 import styled from 'styled-components'
 import {Avatar, IconButton, Button} from '@material-ui/core'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
@@ -11,6 +11,14 @@ import {useCollection} from 'react-firebase-hooks/firestore'
 import Chat from './Chat';
 function Sidebar({forwardedRef}) {
     const [user]  = useAuthState (auth);
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleWindowResize);
+        return () => window.removeEventListener("resize", handleWindowResize);
+    }, []);
+
     const userChatRef = db.collection("chats")
         .where('users', 'array-contains', user.email);
       
@@ -38,7 +46,7 @@ function Sidebar({forwardedRef}) {
 
 
     return (
-        <Container  currentScreenWidth={window.screen.width} ref={forwardedRef}>
+        <Container  currentScreenWidth={width} ref={forwardedRef}>
            <Header>
                <UserAvatar src={user.photoURL} onClick={() =>auth.signOut()}/>
                <IconsContainer>
@@ -73,13 +81,14 @@ export default Sidebar;
 
 
 const Container  = styled.div `
-
+    z-index:1;
     left: ${props => props.currentScreenWidth < 767 ? "-350px":0};
     .MuiSvgIcon-root{
         color: #FBBD38 !important;
     };
+    flex:${props => props.currentScreenWidth > 767? "0.45":""};
     background-color:white;
-    position:fixed;
+    position:${props => props.currentScreenWidth < 767? "fixed":"relative"};
     border-right : 1px solid whitesmoke;
     width:350px;
     overflow-y:auto;
@@ -90,8 +99,8 @@ const Container  = styled.div `
     scrollbar-width:none;
 
     &.active{
-        width:${props => props.currentScreenWidth < 767 ? "100%" :0};
-        left: ${props => props.currentScreenWidth < 767 ? 0 :auto};
+        width:${props => props.currentScreenWidth < 767 ? "100%" :"350px"};
+        left: ${props => props.currentScreenWidth < 767 ? 0 : "auto"};
     }
     transition: all 0.5s;
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef, useState, useEffect} from 'react'
 import Head from 'next/head';
 import styled from 'styled-components'
 import Sidebar from '../../components/Sidebar';
@@ -6,19 +6,42 @@ import ChatScreen from '../../components/ChatScreen';
 import {db, auth} from "../../firebase";
 import {useAuthState} from 'react-firebase-hooks/auth'
 import { getRecipientEmail } from '../../utils/getRecipientEmail';
+import MenuIcon from '@material-ui/icons/Menu';
+import CloseIcon from '@material-ui/icons/Close';
+
 function Chat({chat, messages}) {
     const [user] = useAuthState(auth);
+    const childRef = useRef(null);
+    const toggleRef = useRef(null);
+    const [toggled, setToggled] = useState(false);
+    const [width, setWidth] = useState(window.innerWidth);
 
+    useEffect(() => {
+        const handleWindowResize = () => setWidth(window.innerWidth);
+        window.addEventListener("resize", handleWindowResize);
+        return () => window.removeEventListener("resize", handleWindowResize);
+    }, []);
+    const ToogleType= !toggled? ToggleMenu : CloseMenu;
+
+    const toggleMenu = () => {
+        setToggled(!toggled);
+        childRef?.current?.classList.toggle('active');
+        toggleRef?.current?.classList.toggle('active');
+    }
 
     return (
         <Container>
             <Head>
                 <title>Chat with {getRecipientEmail(chat.users, user)}</title>
             </Head>
-            <Sidebar/>
-            <ChatContainer>
+
+            <Sidebar forwardedRef={childRef}/>
+
+            <ChatContainer width={width}>
                 <ChatScreen chat={chat} messages={messages}/>
             </ChatContainer>
+
+            <ToogleType  onClick={toggleMenu}  ref={toggleRef}/>
         </Container>
     )
 }
@@ -57,12 +80,44 @@ export async   function getServerSideProps  (context)  {
     }
 }
 
+const CloseMenu = styled(CloseIcon) `
+    z-index:10;
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px !important;
+    height:60px !important;
+    background-color:white;
+    cursor:pointer;
+    z-index:2;
+    >path{
+        color:#FBBD38;
+    }
+
+`;
+
+const ToggleMenu = styled(MenuIcon) `
+    z-index:10;
+    position:absolute;
+    top:0;
+    right:0;
+    width:60px !important;
+    height:60px !important;
+    background-color:#FBBD38;
+    cursor:pointer;
+    >path{
+        color:white;
+    }
+    z-index:2;
+
+`;
 
 const Container = styled.div`
     display:flex;
 `;
 const ChatContainer = styled.div`
     flex:1;
+    position: ${props => props.width < 767 ? "fixed": "relative"};
     overflow: scroll;
     height:100vh;
     ::-webkit-scrollbar{

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import {useRef, useState} from 'react';
+import {useRef, useState, useEffect} from 'react';
 import Sidebar from '../components/Sidebar';
 import styled from 'styled-components';
 import DefaultScreen from '../components/DefaultScreen';
@@ -9,6 +9,13 @@ export default function Home() {
   const childRef = useRef(null);
   const toggleRef = useRef(null);
   const [toggled, setToggled] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
 
   const ToogleType= !toggled? ToggleMenu : CloseMenu;
 
@@ -17,6 +24,8 @@ export default function Home() {
     childRef?.current?.classList.toggle('active');
     toggleRef?.current?.classList.toggle('active');
   }
+
+
   
   return (
     <Contaner>
@@ -24,12 +33,16 @@ export default function Home() {
         <title>jooko</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      
       <Sidebar forwardedRef={childRef}/>
 
       <ChatContainer>
         <DefaultScreen/>
       </ChatContainer>
-      <ToogleType  onClick={toggleMenu}  ref={toggleRef}/>
+      {width < 767 &&
+        <ToogleType onClick={toggleMenu}  ref={toggleRef}/>
+      }
+      
 
     </Contaner>
   )
@@ -41,8 +54,12 @@ const CloseMenu = styled(CloseIcon) `
   right:0;
   width:60px !important;
   height:60px !important;
-  background-color:#ea1d63;
-  cursor:pointer;
+  background-color:#FBBD38;
+    cursor:pointer;
+    z-index:2;
+    >path{
+        color:white;
+    }
 
 `;
 
@@ -54,7 +71,11 @@ const ToggleMenu = styled(MenuIcon) `
   height:60px !important;
   background-color:#FBBD38;
   cursor:pointer;
-
+  >path{
+      color:white;
+  }
+  z-index:2;
+  
 `;
 
 const Contaner = styled.div `
