@@ -12,7 +12,7 @@ import { InsertEmoticon } from '@material-ui/icons';
 import MicIcon from "@material-ui/icons/Mic";
 import firebase from 'firebase';
 import Message from './Message';
-import { getRecipientEmail } from '../utils/getRecipientEmail';
+import { getRecipientEmail } from '../utils';
 import TimeAgo from 'timeago-react';
 
 function ChatScreen({chat, messages}) {

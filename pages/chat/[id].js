@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar';
 import ChatScreen from '../../components/ChatScreen';
 import {db, auth} from "../../firebase";
 import {useAuthState} from 'react-firebase-hooks/auth'
-import { getRecipientEmail } from '../../utils/getRecipientEmail';
+import { getRecipientEmail, isMobileDevice } from '../../utils';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -22,9 +22,14 @@ function Chat({chat, messages}) {
         return () => window.removeEventListener("resize", handleWindowResize);
     }, []);
 
-    useEffect (() =>{
-        toggleMenu();
-    },[chat]) 
+    useEffect(() =>{
+    if(isMobileDevice(width)){
+        setToggled(false);
+        childRef?.current?.classList.remove('active');
+        toggleRef?.current?.classList.remove('active');
+    }
+  },[width, chat]);
+
     const ToogleType= !toggled? ToggleMenu : CloseMenu;
 
     const toggleMenu = () => {
@@ -121,7 +126,7 @@ const Container = styled.div`
 `;
 const ChatContainer = styled.div`
     flex:1;
-    position: ${props => props.width < 767 ? "fixed": "relative"};
+    position: ${props => isMobileDevice(props.width)? "fixed": "relative"};
     overflow: scroll;
     width: 100%;
     height:100vh;
