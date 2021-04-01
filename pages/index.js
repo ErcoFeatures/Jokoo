@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DefaultScreen from '../components/DefaultScreen';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import { isMobileDevice } from '../utils';
 export default function Home() {
   const childRef = useRef(null);
   const toggleRef = useRef(null);
@@ -17,7 +18,16 @@ export default function Home() {
     return () => window.removeEventListener("resize", handleWindowResize);
   }, []);
 
-  const ToogleType= !toggled? ToggleMenu : CloseMenu;
+  useEffect(() =>{
+    if(isMobileDevice(width)){
+      setToggled(false);
+      childRef?.current?.classList.remove('active');
+      toggleRef?.current?.classList.remove('active');
+    }
+
+  },[width])
+
+  const ToogleType= toggled? CloseMenu: ToggleMenu ;
 
   const toggleMenu = () => {
     setToggled(!toggled);
@@ -34,12 +44,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Sidebar forwardedRef={childRef}/>
+      <Sidebar toggled={toggled} forwardedRef={childRef}/>
 
       <ChatContainer>
         <DefaultScreen/>
       </ChatContainer>
-      {width < 767 &&
+      {isMobileDevice(width) &&
         <ToogleType onClick={toggleMenu}  ref={toggleRef}/>
       }
       

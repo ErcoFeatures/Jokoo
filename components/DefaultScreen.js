@@ -22,22 +22,23 @@ function DefaultScreen({chat, messages}) {
                 <p>With <AppName>Jokoo</AppName> , you'll get fast, simple, secure messaging free*, available on phones all over the world.</p>
             
             </WelcomMessageContainer>
-
-            <p><AppName>Jokoo</AppName> is availabble on:</p>
-            <AvailableDevice>
-            <AvailableDeviceItem>
-                <AndroidOutlined />
-                <p>Android</p>
-            </AvailableDeviceItem>
-            <AvailableDeviceItem>
-                <Apple/>
-                <p>Apple</p>
-            </AvailableDeviceItem>
-            <AvailableDeviceItem>
-                <Laptop />
-                <p>Web</p>
-            </AvailableDeviceItem>
-            </AvailableDevice>
+            <AvailableDeviceContainer>
+                <p><AppName>Jokoo</AppName> is availabble on:</p>
+                <AvailableDevice>
+                <AvailableDeviceItem>
+                    <AndroidOutlined />
+                    <p>Android</p>
+                </AvailableDeviceItem>
+                <AvailableDeviceItem>
+                    <Apple/>
+                    <p>Apple</p>
+                </AvailableDeviceItem>
+                <AvailableDeviceItem>
+                    <Laptop />
+                    <p>Web</p>
+                </AvailableDeviceItem>
+                </AvailableDevice>
+            </AvailableDeviceContainer>
             
         </Container>
     )
@@ -45,6 +46,13 @@ function DefaultScreen({chat, messages}) {
 
 
 export default DefaultScreen;
+
+const AvailableDeviceContainer = styled.div `
+    flex:1;
+    flex-direction:column;
+    align-items:center;
+    display:flex;
+`;
 
 const AppName = styled.span `
     color:#FBBD38;
@@ -94,6 +102,7 @@ const WelcomMessageContainer  = styled.div`
 display : flex;
 flex-direction: column;
 align-items:center;
+padding: 30px;
 >h1, p{
     color: white;
 }

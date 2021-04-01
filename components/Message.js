@@ -27,10 +27,11 @@ const MessageElement = styled.div`
     padding:15px;
     border-radius:10px;
     margin:10px;
-    min-width:60px;
+    min-width:70px;
     padding-bottom:26px;
     position:relative;
     text-align:right;
+    max-width:65%;
 `;
 
 

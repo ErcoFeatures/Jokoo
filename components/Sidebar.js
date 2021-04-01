@@ -9,7 +9,8 @@ import {auth, db} from '../firebase';
 import {useAuthState} from 'react-firebase-hooks/auth'
 import {useCollection} from 'react-firebase-hooks/firestore'
 import Chat from './Chat';
-function Sidebar({forwardedRef}) {
+import { isMobileDevice } from '../utils';
+function Sidebar({toggled, forwardedRef}) {
     const [user]  = useAuthState (auth);
     const [width, setWidth] = useState(window.innerWidth);
 
@@ -46,7 +47,7 @@ function Sidebar({forwardedRef}) {
 
 
     return (
-        <Container  currentScreenWidth={width} ref={forwardedRef}>
+        <Container  toggled={toggled} currentScreenWidth={width} ref={forwardedRef}>
            <Header>
                <UserAvatar src={user.photoURL} onClick={() =>auth.signOut()}/>
                <IconsContainer>
@@ -82,17 +83,17 @@ export default Sidebar;
 
 const Container  = styled.div `
     z-index:1;
-    left: ${props => props.currentScreenWidth < 767 ? "-350px":0};
+    left: ${props => isMobileDevice (props.currentScreenWidth) ? "-350px":0};
     .MuiSvgIcon-root{
         color: #FBBD38 !important;
     };
     height:100vh;
-    flex:${props => props.currentScreenWidth > 767? "0.45":""};
+    flex:${props => !isMobileDevice(props.currentScreenWidth)? "0.45":""};
     background-color:white;
-    position:${props => props.currentScreenWidth < 767? "fixed":""};
+    position:${props => isMobileDevice(props.currentScreenWidth)? "fixed":""};
     border-right : 1px solid whitesmoke;
-    max-width:${props => props.currentScreenWidth > 767? "350px" : ""};
-    min-width:${props => props.currentScreenWidth > 767? "250px" : ""};
+    max-width:${props => !isMobileDevice(props.currentScreenWidth)? "350px" : ""};
+    min-width:${props => !isMobileDevice(props.currentScreenWidth) ? "250px" : ""};
 
     overflow-y:auto;
     ::-webki-scrollbar{
@@ -102,8 +103,8 @@ const Container  = styled.div `
     scrollbar-width:none;
 
     &.active{
-        width:${props => props.currentScreenWidth < 767 ? "100%" :"350px"};
-        left: ${props => props.currentScreenWidth < 767 ? 0 : "auto"};
+        width:${props => isMobileDevice(props.currentScreenWidth) ? "100%" :"350px"};
+        left: ${props => isMobileDevice(props.currentScreenWidth) ? 0 : "auto"};
     }
     transition: all 0.5s;
 
