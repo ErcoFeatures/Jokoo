@@ -124,7 +124,7 @@ const ChatContainer = styled.div`
     position: ${props => props.width < 767 ? "fixed": "relative"};
     overflow: scroll;
     width: 100%;
-    height:100%;
+    height:100vh;
     ::-webkit-scrollbar{
         display:none;
     }
