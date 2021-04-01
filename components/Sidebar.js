@@ -86,11 +86,14 @@ const Container  = styled.div `
     .MuiSvgIcon-root{
         color: #FBBD38 !important;
     };
+    height:100vh;
     flex:${props => props.currentScreenWidth > 767? "0.45":""};
     background-color:white;
-    position:${props => props.currentScreenWidth < 767? "fixed":"relative"};
+    position:${props => props.currentScreenWidth < 767? "fixed":""};
     border-right : 1px solid whitesmoke;
-    width:350px;
+    max-width:${props => props.currentScreenWidth > 767? "350px" : ""};
+    min-width:${props => props.currentScreenWidth > 767? "250px" : ""};
+
     overflow-y:auto;
     ::-webki-scrollbar{
         display:none;

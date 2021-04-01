@@ -21,6 +21,10 @@ function Chat({chat, messages}) {
         window.addEventListener("resize", handleWindowResize);
         return () => window.removeEventListener("resize", handleWindowResize);
     }, []);
+
+    useEffect (() =>{
+        toggleMenu();
+    },[chat]) 
     const ToogleType= !toggled? ToggleMenu : CloseMenu;
 
     const toggleMenu = () => {
@@ -119,6 +123,7 @@ const ChatContainer = styled.div`
     flex:1;
     position: ${props => props.width < 767 ? "fixed": "relative"};
     overflow: scroll;
+    width: 100%;
     height:100vh;
     ::-webkit-scrollbar{
         display:none;
