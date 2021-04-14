@@ -59,7 +59,7 @@ export default function Home() {
 }
 
 const CloseMenu = styled(CloseIcon) `
-  position:absolute;
+  position:fixed;
   top:0;
   right:0;
   width:60px !important;
@@ -74,7 +74,7 @@ const CloseMenu = styled(CloseIcon) `
 `;
 
 const ToggleMenu = styled(MenuIcon) `
-  position:absolute;
+  position:fixed;
   top:0;
   right:0;
   width:60px !important;
