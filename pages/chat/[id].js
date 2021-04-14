@@ -91,7 +91,7 @@ export async   function getServerSideProps  (context)  {
 
 const CloseMenu = styled(CloseIcon) `
     z-index:10;
-    position:absolute;
+    position:fixed;
     top:0;
     right:0;
     width:60px !important;
@@ -107,7 +107,7 @@ const CloseMenu = styled(CloseIcon) `
 
 const ToggleMenu = styled(MenuIcon) `
     z-index:10;
-    position:absolute;
+    position:fixed;
     top:0;
     right:0;
     width:60px !important;
